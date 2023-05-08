@@ -4,18 +4,40 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
+import { ElementStates } from "../../types/element-states";
+import { reverseString } from "./utils";
 
 export const StringComponent: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [inputValue, setInputValue] = React.useState<string>("");
   const [string, setString] = React.useState<string[]>([]);
+  const [iterationIndexes, setIterationIndexes] = React.useState<number[]>([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setString(e.target.value.split(""));
+    setInputValue(e.target.value);
+  };
+
+  const handleClick = async (timeout: number) => {
+    setIterationIndexes([]);
+    setIsLoading(true);
+    await reverseString(inputValue, setString, setIterationIndexes, timeout);
+    setIsLoading(false);
+  };
+
+  const changeCircleColor = (circleIndex: number, [startIndex, endIndex]: number[]) => {
+    if (circleIndex < startIndex || circleIndex > endIndex) {
+      return ElementStates.Modified;
+    } else if (startIndex === endIndex && startIndex > 0 || endIndex - startIndex === 1) {
+      return ElementStates.Modified;
+    } else if (circleIndex === startIndex || circleIndex === endIndex) {
+      return ElementStates.Changing;
+    } else {
+      return ElementStates.Default;
+    }
   };
 
   return (
     <SolutionLayout title="Строка">
-      {" "}
       <form className={styles.form}>
         <Input
           extraClass={styles.input}
@@ -26,16 +48,19 @@ export const StringComponent: React.FC = () => {
         <Button
           text="Развернуть"
           isLoader={isLoading}
-          disabled={string.length < 2}
+          disabled={inputValue.length < 2}
+          onClick={(e) => handleClick(1000)}
         />
       </form>
-      <ul className={styles.list}>
+      <div className={styles.list}>
         {string.map((item, index) => (
-          <li key={index}>
-            <Circle letter={item} />
-          </li>
+            <Circle
+              letter={item}
+              key={index}
+              state={changeCircleColor(index, iterationIndexes)}
+            />
         ))}
-      </ul>
+      </div>
     </SolutionLayout>
   );
 };
