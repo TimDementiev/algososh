@@ -1,0 +1,56 @@
+.wrapper {
+    display: flex;
+    max-width: 952px;
+    width: 100%;
+    margin: 0 auto;
+    gap: 12px;
+    padding-bottom: 12px;
+}
+
+.btn {
+    max-width: 175px;
+    width: 100%;
+}
+
+.wrapperIndex {
+    display: flex;
+    max-width: 952px;
+    width: 100%;
+    margin: 0 auto;
+    gap: 12px;
+    padding-bottom: 120px;
+}
+
+.btnIndex {
+    max-width: 362px;
+    width: 100%;
+}
+
+.listWrapper {
+    max-width: 980px;
+    width: 100%;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 10px;
+}
+
+.list {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.addNodeCircle {
+    position: absolute;
+    top: -70px;
+    left: 14px;
+}
+
+.deleteNodeCircle {
+    position: absolute;
+    bottom: -90px;
+    left: 12px;
+}

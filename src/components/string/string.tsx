@@ -24,10 +24,16 @@ export const StringComponent: React.FC = () => {
     setIsLoading(false);
   };
 
-  const changeCircleColor = (circleIndex: number, [startIndex, endIndex]: number[]) => {
+  const changeCircleColor = (
+    circleIndex: number,
+    [startIndex, endIndex]: number[]
+  ) => {
     if (circleIndex < startIndex || circleIndex > endIndex) {
       return ElementStates.Modified;
-    } else if (startIndex === endIndex && startIndex > 0 || endIndex - startIndex === 1) {
+    } else if (
+      (startIndex === endIndex && startIndex > 0) ||
+      endIndex - startIndex === 1
+    ) {
       return ElementStates.Modified;
     } else if (circleIndex === startIndex || circleIndex === endIndex) {
       return ElementStates.Changing;
@@ -54,11 +60,11 @@ export const StringComponent: React.FC = () => {
       </form>
       <div className={styles.list}>
         {string.map((item, index) => (
-            <Circle
-              letter={item}
-              key={index}
-              state={changeCircleColor(index, iterationIndexes)}
-            />
+          <Circle
+            letter={item}
+            key={index}
+            state={changeCircleColor(index, iterationIndexes)}
+          />
         ))}
       </div>
     </SolutionLayout>

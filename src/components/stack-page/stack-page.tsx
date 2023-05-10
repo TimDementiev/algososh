@@ -1,5 +1,5 @@
 import React, { FC, FormEvent, useState } from "react";
-import styles from './stack-page.module.css';
+import styles from "./stack-page.module.css";
 
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -11,61 +11,61 @@ import { timeOut } from "../../utils/delay";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const StackPage: FC = () => {
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
   const [stack, setStack] = useState<TCircle[]>([]);
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [stackClass] = useState(new Stack<TCircle>());
 
   type TCircle = {
     state?: ElementStates;
-    value: string | number,
-    head?: string
+    value: string | number;
+    head?: string;
   };
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value
-    setInputValue(value)
+    const value = e.currentTarget.value;
+    setInputValue(value);
   };
 
   const handleSubmit = (e: FormEvent<HTMLElement>) => {
-    e.preventDefault()
+    e.preventDefault();
   };
 
-  const pushElement = async() => {
-    setIsloading(true)
-    stackClass.push({value: inputValue, state: ElementStates.Changing})
-    setStack([...stackClass.getElements()])
-    setInputValue('')
-    await timeOut(SHORT_DELAY_IN_MS)
-    const value = stackClass.peak()
-    if(value) {
-      value.state = ElementStates.Default
-      setStack([...stackClass.getElements()])
+  const pushElement = async () => {
+    setIsloading(true);
+    stackClass.push({ value: inputValue, state: ElementStates.Changing });
+    setStack([...stackClass.getElements()]);
+    setInputValue("");
+    await timeOut(SHORT_DELAY_IN_MS);
+    const value = stackClass.peak();
+    if (value) {
+      value.state = ElementStates.Default;
+      setStack([...stackClass.getElements()]);
     }
-    setIsloading(false)
+    setIsloading(false);
   };
 
-  const popElement = async() => {
-    const value = stackClass.peak()
-    if(value) {
-      value.state = ElementStates.Changing
-      setStack([...stackClass.getElements()])
+  const popElement = async () => {
+    const value = stackClass.peak();
+    if (value) {
+      value.state = ElementStates.Changing;
+      setStack([...stackClass.getElements()]);
     }
-    await timeOut(SHORT_DELAY_IN_MS)
-    stackClass.pop()
-    setStack([...stackClass.getElements()])
+    await timeOut(SHORT_DELAY_IN_MS);
+    stackClass.pop();
+    setStack([...stackClass.getElements()]);
   };
 
   const deleteAllElements = () => {
-    stackClass.clear()
-    setStack([...stackClass.getElements()])
+    stackClass.clear();
+    setStack([...stackClass.getElements()]);
   };
 
   const getPosition = (index: number, stack: TCircle[]) => {
-    if(index === stack.length - 1) {
-      return 'top'
+    if (index === stack.length - 1) {
+      return "top";
     } else {
-      return ''
+      return "";
     }
   };
 
@@ -79,7 +79,7 @@ export const StackPage: FC = () => {
           index={index}
         />
       </li>
-    )
+    );
   });
 
   return (
@@ -93,30 +93,28 @@ export const StackPage: FC = () => {
             onChange={handleChange}
           />
           <Button
-            text='Развернуть'
-            type='submit'
+            text="Развернуть"
+            type="submit"
             onClick={pushElement}
             isLoader={isLoading}
             disabled={!inputValue || stack.length >= 20}
           />
           <Button
-            text='Удалить'
-            type='submit'
+            text="Удалить"
+            type="submit"
             onClick={popElement}
             disabled={stack.length === 0}
           />
           <div className={styles.stack__lastBtn}>
             <Button
-              text='Очистить'
-              type='submit'
+              text="Очистить"
+              type="submit"
               onClick={deleteAllElements}
               disabled={stack.length === 0}
             />
           </div>
         </form>
-        <ul className={styles.stack__numbersContainer}>
-          {elements}
-        </ul>
+        <ul className={styles.stack__numbersContainer}>{elements}</ul>
       </div>
     </SolutionLayout>
   );
