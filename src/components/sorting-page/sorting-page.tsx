@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SolutionLayout } from '../../components/ui/solution-layout/solution-layout';
 import sortingPageStyles from './sorting-page.module.css';
 import { RadioInput } from "../../components/ui/radio-input/radio-input";
@@ -8,25 +8,16 @@ import { ElementStates } from "../../types/element-states";
 import { Direction } from "../../types/direction";
 import { DELAY_IN_MS } from "../../constants/delays";
 import { timeOut } from "../../utils/delay";
-import { makeRandomArr } from "./utils";
+import { getRandomArray } from "../../utils/random-generate";
 
 type TArray = {
   value: number;
   color: ElementStates;
 };
 
-export const SortingPage: React.FC = () => {
-  const [array, setArray] = useState<TArray[]>([]);
-  const [sortName, setSortName] = useState('выбор');
-  const [sorting, setSorting] = useState<Direction>();
-  const [loader, setLoader] = useState(false);
-
-  const onNewArrButtonClik = () => {
-    setArray([...makeRandomArr()]);
-  };
-
-  const selectionSortAscending = async (arr: TArray[]) => {
-    setLoader(true);
+export const selectionSortAscending = async (arr: TArray[], setArray: Dispatch<SetStateAction<TArray[]>>, setLoader: Dispatch<SetStateAction<boolean>>) => {
+  setLoader(true);
+  if (arr.length > 1) {
     for (let i = 0; i < arr.length - 1; i++) {
       let minInd = i;
       for (let j = i + 1; j < arr.length; j++) {
@@ -44,11 +35,14 @@ export const SortingPage: React.FC = () => {
       arr[i].color = ElementStates.Modified;
     }
     arr[arr.length - 1].color = ElementStates.Modified;
-    setLoader(false);
-  };
+    setArray([...arr]);
+  }
+  setLoader(false);
+};
 
-  const selectionSortDescending = async (arr: TArray[]) => {
-    setLoader(true);
+export const selectionSortDescending = async (arr: TArray[], setArray: Dispatch<SetStateAction<TArray[]>>, setLoader: Dispatch<SetStateAction<boolean>>) => {
+  setLoader(true);
+  if (arr.length > 1) {
     for (let i = 0; i < arr.length - 1; i++) {
       let maxInd = i;
       for (let j = i + 1; j < arr.length; j++) {
@@ -66,11 +60,14 @@ export const SortingPage: React.FC = () => {
       arr[i].color = ElementStates.Modified;
     }
     arr[arr.length - 1].color = ElementStates.Modified;
-    setLoader(false);
-  };
+    setArray([...arr]);
+  }
+  setLoader(false);
+};
 
-  const bubbleSortAscending = async (arr: TArray[]) => {
-    setLoader(true);
+export const bubbleSortAscending = async (arr: TArray[], setArray: Dispatch<SetStateAction<TArray[]>>, setLoader: Dispatch<SetStateAction<boolean>>) => {
+  setLoader(true);
+  if (arr.length > 1) {
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr.length - i - 1; j++) {
         arr[j].color = ElementStates.Changing;
@@ -83,12 +80,15 @@ export const SortingPage: React.FC = () => {
         arr[j].color = ElementStates.Default;
       }
       arr[arr.length - i - 1].color = ElementStates.Modified;
+      setArray([...arr]);
     };
-    setLoader(false);
-  };
+  }
+  setLoader(false);
+};
 
-  const bubbleSortDescending = async (arr: TArray[]) => {
-    setLoader(true);
+export const bubbleSortDescending = async (arr: TArray[], setArray: Dispatch<SetStateAction<TArray[]>>, setLoader: Dispatch<SetStateAction<boolean>>) => {
+  setLoader(true);
+  if (arr.length > 1) {
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr.length - i - 1; j++) {
         arr[j].color = ElementStates.Changing;
@@ -101,24 +101,37 @@ export const SortingPage: React.FC = () => {
         arr[j].color = ElementStates.Default;
       }
       arr[arr.length - i - 1].color = ElementStates.Modified;
+      setArray([...arr]);
     };
-    setLoader(false);
+  }
+  setLoader(false);
+};
+
+export const SortingPage: React.FC = () => {
+  const [array, setArray] = useState<TArray[]>([]);
+  const [sortName, setSortName] = useState('выбор');
+  const [sorting, setSorting] = useState<Direction>();
+  const [loader, setLoader] = useState(false);
+
+  const onNewArrButtonClik = () => {
+    setArray([...getRandomArray(3,18)]);
   };
 
   const handleClick = (sorting: Direction) => {
     setSorting(sorting);
 
     if (sortName === 'выбор' && sorting === Direction.Ascending) {
-      selectionSortAscending(array);
+      selectionSortAscending(array, setArray, setLoader);
+
     };
     if (sortName === 'выбор' && sorting === Direction.Descending) {
-      selectionSortDescending(array);
+      selectionSortDescending(array, setArray, setLoader);
     };
     if (sortName === 'пузырек' && sorting === Direction.Ascending) {
-      bubbleSortAscending(array);
+      bubbleSortAscending(array, setArray, setLoader);
     };
     if (sortName === 'пузырек' && sorting === Direction.Descending) {
-      bubbleSortDescending(array);
+      bubbleSortDescending(array, setArray, setLoader);
     };
   };
 
@@ -143,8 +156,8 @@ export const SortingPage: React.FC = () => {
   };
 
   useEffect(() => {
-    setArray([...makeRandomArr()]);
-    return () => { setArray([])};
+    setArray([...getRandomArray(3,18)]);
+    return () => { setArray([]) };
   }, []);
 
   return (
