@@ -93,7 +93,7 @@ export const StackPage: FC = () => {
             onChange={handleChange}
           />
           <Button
-            text="Развернуть"
+            text="Добавить"
             type="submit"
             onClick={pushElement}
             isLoader={isLoading}
@@ -101,14 +101,14 @@ export const StackPage: FC = () => {
           />
           <Button
             text="Удалить"
-            type="submit"
+            data-cy="remove"
             onClick={popElement}
             disabled={stack.length === 0}
           />
           <div className={styles.stack__lastBtn}>
             <Button
               text="Очистить"
-              type="submit"
+              type="reset"
               onClick={deleteAllElements}
               disabled={stack.length === 0}
             />
