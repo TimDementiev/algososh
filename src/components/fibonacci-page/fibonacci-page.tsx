@@ -37,6 +37,7 @@ export const FibonacciPage: React.FC = () => {
           value={numberInput}
         />
         <Button
+          type="submit"
           onClick={handleClick}
           isLoader={loader}
           text="Рассчитать"
