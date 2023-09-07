@@ -72,18 +72,21 @@ export const QueuePage: React.FC = () => {
           onChange={handleChange}
         />
         <Button
+          type="submit"
           text="Добавить"
           isLoader={isLoadingAdd}
           disabled={isLoadingDelete || !inputValue || queue.isFull()}
           onClick={handleClickAdd}
         />
         <Button
+          data-cy="remove"
           text="Удалить"
           isLoader={isLoadingDelete}
           disabled={isLoadingAdd || !!queue.isEmpty()}
           onClick={handleClickDelete}
         />
         <Button
+          type="reset"
           extraClass={styles.button_type_reset}
           text="Очистить"
           disabled={isLoadingAdd || isLoadingDelete || !!queue.isEmpty()}

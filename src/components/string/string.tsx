@@ -52,6 +52,7 @@ export const StringComponent: React.FC = () => {
           onChange={handleChange}
         />
         <Button
+          type="submit"
           text="Развернуть"
           isLoader={isLoading}
           disabled={inputValue.length < 2}
