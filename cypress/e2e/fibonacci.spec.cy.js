@@ -1,8 +1,8 @@
-import { CY_BASE_URL, CY_CIRCLE_CIRCLE, CY_SUBMIT_BTN } from "../constants";
+import {CY_CIRCLE_CIRCLE, CY_SUBMIT_BTN } from "../constants";
 
 describe("корректная работа кнопки на странице /fibonacci", () => {
   beforeEach(() => {
-    cy.visit(`${CY_BASE_URL}/fibonacci`);
+    cy.visit(`/fibonacci`);
   });
 
   it("должна начинаться с заблокированной кнопки", () => {
@@ -24,7 +24,7 @@ describe("корректная работа кнопки на странице /
 
 describe("визуализация алгоритма", () => {
   beforeEach(() => {
-    cy.visit(`${CY_BASE_URL}/fibonacci`);
+    cy.visit(`/fibonacci`);
   });
 
   it("визуализация добавление чисел", () => {

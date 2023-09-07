@@ -1,6 +1,5 @@
 import {
   CHANGING_COLOR,
-  CY_BASE_URL,
   CY_CIRCLE_CIRCLE,
   CY_REMOVE_BTN,
   CY_RESET_BTN,
@@ -10,7 +9,7 @@ import {
 
 describe("корректная работа кнопки на странице /recursion", () => {
   beforeEach(() => {
-    cy.visit(`${CY_BASE_URL}/stack`);
+    cy.visit(`/stack`);
   });
 
   it("должна начинаться с заблокированной кнопки", () => {
@@ -33,7 +32,7 @@ describe("корректная работа кнопки на странице /
 describe("визуализация алгоритма", () => {
   const test_arr = ["FE", "DM", "PT"];
   beforeEach(() => {
-    cy.visit(`${CY_BASE_URL}/stack`);
+    cy.visit(`/stack`);
   });
 
   it("правильность добавления и удаления элементов в стек", () => {

@@ -1,7 +1,5 @@
 import {
   CHANGING_COLOR,
-  CY_BASE_URL,
-  // CY_CIRCLE_CIRCLE,
   CY_SUBMIT_BTN,
   DEFAULT_COLOR,
   MODIFIED_COLOR,
@@ -9,7 +7,7 @@ import {
 
 describe("корректная работа кнопки на странице /recursion", () => {
   beforeEach(() => {
-    cy.visit(`${CY_BASE_URL}/recursion`);
+    cy.visit(`/recursion`);
   });
 
   it("должна начинаться с заблокированной кнопки", () => {
@@ -31,7 +29,7 @@ describe("корректная работа кнопки на странице /
 
 describe("визуализация алгоритма", () => {
   beforeEach(() => {
-    cy.visit(`${CY_BASE_URL}/recursion`);
+    cy.visit(`/recursion`);
   });
 
   it("строка разворачивается корректно", () => {
